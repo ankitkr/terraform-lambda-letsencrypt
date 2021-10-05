@@ -1,0 +1,81 @@
+- name: route53_access
+  policy:
+    - sid: "AllowRoute53ListAccess"
+      effect: "Allow"
+      actions:
+        - "route53:ListHostedZones"
+        - "route53:GetChange"
+      resources:
+        - "*"
+    - sid: "AllowRoute53ChangeAccess"
+      effect: "Allow"
+      actions:
+        - "route53:ChangeResourceRecordSets"
+      resources:
+        - "arn:aws:route53:::hostedzone/${aws_route53_zone_id}"
+- name: s3_bucket_access
+  policy:
+    - sid: "S3ListAccess"
+      effect: "Allow"
+      actions:
+        - "s3:ListBucket"
+        - "s3:ListBucketVersions"
+        - "s3:ListBucketMultipartUploads"
+      resources:
+        - "arn:aws:s3:::${aws_s3_bucket}"
+    - sid: "S3ReadWriteAccess"
+      effect: "Allow"
+      actions:
+        - "s3:PutObject"
+        - "s3:GetObject"
+        - "s3:GetObjectVersion"
+        - "s3:AbortMultipartUpload"
+      resources:
+        - "arn:aws:s3:::${aws_s3_bucket}/*"
+- name: cloudwatch_access
+  policy:
+    - sid: "CreateLogGroupAccess"
+      effect: "Allow"
+      actions:
+        - "logs:CreateLogGroup"
+      resources:
+        - "arn:aws:logs:${aws_region}:${aws_account_id}:*"
+    - sid: "LogGroupAccess"
+      effect: "Allow"
+      actions:
+        - "logs:PutLogEvents"
+        - "logs:CreateLogStream"
+      resources:
+        - "arn:aws:logs:${aws_region}:${aws_account_id}:log-group:/aws/lambda/${lambda_function_name}:*"
+    - sid: "PutMetricAccess"
+      effect: "Allow"
+        actions:
+          - "cloudwatch:PutMetricData"
+        resources:
+          - "*"
+- name: acm_access
+  policy:
+    - sid: "ACMListAccess"
+      effect: "Allow"
+      actions:
+        - "acm:ListCertificates"
+        - "acm:ListTagsForCertificate"
+      resources:
+        - "*"
+    - sid: "ACMReadWriteAccess"
+      effect: "Allow"
+      actions:
+        - "acm:ImportCertificate"
+        - "acm:DescribeCertificate"
+        - "acm:AddTagsToCertificate"
+        - "acm:RemoveTagsFromCertificate"
+      resources:
+        - "arn:aws:acm:${aws_region}:${aws_account_id}:certificate/*"
+- name: sns_access
+  policy:
+    - sid: "SNSPublishAccess"
+      effect: "Allow"
+      actions:
+        - "sns:Publish"
+      resources:
+        - "arn:aws:sns:${aws_region}:${aws_account_id}:${sns_topic_name}"
