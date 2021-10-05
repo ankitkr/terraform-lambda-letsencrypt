@@ -1,16 +1,16 @@
-module "lambda_layer_packages" {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-lambda.git?ref=v2.20.0"
-
-  create_layer = true
-
-  layer_name               = "${local.service}-package-layer"
-  description              = "Lambda layer for packages"
-  compatible_runtimes      = ["python3.6"]
-  compatible_architectures = ["arm64"]
-
-  source_path = "${path.module}/package/"
-  store_on_s3 = false
-}
+#module "lambda_layer_packages" {
+#  source = "git::git@github.com:terraform-aws-modules/terraform-aws-lambda.git?ref=v2.20.0"
+#
+#  create_layer = true
+#
+#  layer_name               = "${local.service}-package-layer"
+#  description              = "Lambda layer for packages"
+#  compatible_runtimes      = ["python3.6"]
+#  compatible_architectures = ["arm64"]
+#
+#  source_path = "${path.module}/package/"
+#  store_on_s3 = false
+#}
 
 module "certbot_lambda" {
   source = "git::git@github.com:terraform-aws-modules/terraform-aws-lambda.git?ref=v2.20.0"
@@ -23,10 +23,16 @@ module "certbot_lambda" {
   runtime       = "python3.6"
   timeout       = 300
   architectures = ["arm64"]
-  source_path   = "${path.module}/src/"
-  layers = [
-    module.lambda_layer_packages.lambda_layer_arn
+  source_path = [
+    {
+      path             = "${path.module}/src/"
+      pip_requirements = "${path.module}/src/requirements.txt"
+    }
   ]
+  #  source_path   = "${path.module}/src/"
+  #  layers = [
+  #    module.lambda_layer_packages.lambda_layer_arn
+  #  ]
 
   create_role                               = false
   store_on_s3                               = false
