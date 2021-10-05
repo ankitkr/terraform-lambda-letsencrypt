@@ -34,15 +34,14 @@ module "certbot_lambda" {
   create_current_version_allowed_triggers   = false
   create_unqualified_alias_allowed_triggers = false
 
-  environment = {
-    variables = {
-      EMAIL     = var.contact_email
-      DOMAINS   = var.certificate_domains
-      S3_BUCKET = module.s3_bucket.bucket.id
-      S3_PREFIX = var.s3_prefix
-      SNS_ARN   = var.notification_sns_arn
-    }
+  environment_variables = {
+    EMAIL     = var.contact_email
+    DOMAINS   = var.certificate_domains
+    S3_BUCKET = module.s3_bucket.bucket.id
+    S3_PREFIX = var.s3_prefix
+    SNS_ARN   = var.notification_sns_arn
   }
+
 
   tags = {
     "Service" = local.service,
