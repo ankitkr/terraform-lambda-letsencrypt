@@ -1,12 +1,12 @@
 module "s3_bucket" {
   source = "git::git@github.com:vy-labs/vastu-elements.git//aws/s3?ref=development"
 
-  bucket_name                   = var.s3_bucket_name
-  acl                           = "private"
-  force_destroy                 = true
-  versioning_enabled            = true
-  sse_algorithm                 = "aws:kms"
-  lifecycle_rules               = [{
+  bucket_name        = var.s3_bucket_name
+  acl                = "private"
+  force_destroy      = true
+  versioning_enabled = true
+  sse_algorithm      = "aws:kms"
+  lifecycle_rules = [{
     enabled = true
     prefix  = ""
     tags    = {}
@@ -26,7 +26,7 @@ module "s3_bucket" {
     glacier_transition_days     = 180
     deeparchive_transition_days = 180
     expiration_days             = 365
-  }, {
+    }, {
     enabled = true
     prefix  = "archive/"
     tags    = {}
@@ -47,8 +47,8 @@ module "s3_bucket" {
     deeparchive_transition_days = 180
     expiration_days             = 180
   }]
-  block_public_acls             = true
-  block_public_policy           = true
-  ignore_public_acls            = true
-  restrict_public_buckets       = true
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }

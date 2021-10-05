@@ -49,10 +49,10 @@
         - "arn:aws:logs:${aws_region}:${aws_account_id}:log-group:/aws/lambda/${lambda_function_name}:*"
     - sid: "PutMetricAccess"
       effect: "Allow"
-        actions:
-          - "cloudwatch:PutMetricData"
-        resources:
-          - "*"
+      actions:
+        - "cloudwatch:PutMetricData"
+      resources:
+        - "*"
 - name: acm_access
   policy:
     - sid: "ACMListAccess"
