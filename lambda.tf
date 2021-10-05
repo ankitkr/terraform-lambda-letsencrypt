@@ -20,9 +20,9 @@ module "certbot_lambda" {
   lambda_role   = module.iam_role.iam_role.arn
   description   = format("CertBot Lambda that creates and renews certificates for %s", var.certificate_domains)
   handler       = "main.lambda_handler"
-  runtime       = "python3.8"
+  runtime       = "python3.6"
   timeout       = 300
-  architectures = ["arm64"]
+  architectures = ["x86_64"]
   source_path = [
     {
       path             = "${path.module}/src/"
