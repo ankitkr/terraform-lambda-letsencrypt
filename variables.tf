@@ -12,8 +12,8 @@ variable "sns_topic_name" {}
 
 variable "notification_sns_arn" {}
 
-variable "domains" {}
+variable "certificate_domains" {}
 
-variable "email" {}
+variable "contact_email" {}
 
 variable "lambda_name" {}
