@@ -8,9 +8,13 @@ variable "s3_prefix" {}
 
 variable "route53_zone_id" {}
 
-variable "sns_topic_name" {}
+variable "sns_topic_name" {
+  default = ""
+}
 
-variable "notification_sns_arn" {}
+variable "notification_sns_arn" {
+  default = ""
+}
 
 variable "certificate_domains" {}
 
