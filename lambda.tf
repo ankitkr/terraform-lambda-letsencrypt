@@ -29,6 +29,11 @@ module "certbot_lambda" {
       pip_requirements = "${path.module}/src/requirements.txt"
     }
   ]
+
+  build_in_docker   = true
+  docker_file       = "src/python3.8/docker/Dockerfile"
+  docker_build_root = "src/python3.8/docker"
+  docker_image      = "lambci/lambda:build-python3.8"
   #  source_path   = "${path.module}/src/"
   #  layers = [
   #    module.lambda_layer_packages.lambda_layer_arn
