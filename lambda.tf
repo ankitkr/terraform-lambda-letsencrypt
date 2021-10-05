@@ -1,5 +1,5 @@
 module "lambda_layer_packages" {
-  source = "git::git@github.com:terraform-aws-modules/terraform-aws-lambda.git?ref=v2.10.0"
+  source = "git::git@github.com:terraform-aws-modules/terraform-aws-lambda.git?ref=v2.20.0"
 
   create_layer = true
 
