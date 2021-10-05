@@ -46,7 +46,7 @@
         - "logs:PutLogEvents"
         - "logs:CreateLogStream"
       resources:
-        - "arn:aws:logs:${aws_region}:${aws_account_id}:log-group:/aws/lambda/${lambda_function_name}:*"
+        - "arn:aws:logs:${aws_region}:${aws_account_id}:log-group:${log_group_name}:*"
     - sid: "PutMetricAccess"
       effect: "Allow"
       actions:
