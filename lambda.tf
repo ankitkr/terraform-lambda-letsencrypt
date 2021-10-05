@@ -18,7 +18,7 @@ module "certbot_lambda" {
 
   function_name = local.lambda_function_name
   lambda_role   = module.iam_role.iam_role.arn
-  description   = "CertBot Lambda that creates and renews certificates for ${var.certificate_domains}"
+  description   = format("CertBot Lambda that creates and renews certificates for %s", var.certificate_domains)
   handler       = "main.lambda_handler"
   runtime       = "python3.6"
   timeout       = 300
@@ -42,9 +42,13 @@ module "certbot_lambda" {
     SNS_ARN   = var.notification_sns_arn
   }
 
-
   tags = {
     "Service" = local.service,
     "Target"  = local.lambda_function_name
   }
+
+  depends_on = [
+    module.s3_bucket,
+    module.cloudwatch_log_group
+  ]
 }
